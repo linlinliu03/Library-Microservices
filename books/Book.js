@@ -7,17 +7,14 @@ const BookSchema = new Schema({
         type: String,
         required: true
     },
-
     author: {
         type: String,
         required: true
     },
-     
     numberPages: {
         type: Number,
         required: false
     },
-
     publisher: {
         type: String,
         required: false
