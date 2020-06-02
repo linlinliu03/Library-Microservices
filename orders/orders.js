@@ -23,6 +23,32 @@ app.post("/order", (req, res) => {
             .catch(err => res.json(err.message))
 })
 
+app.get("/orders", (req, res) => {
+    Order.find()
+         .then(books => res.json(books))
+         .catch(err => res.json(err.message))
+})
+
+app.get("/orders/:id", (req, res) => {
+    Order.findById(req.params.id)
+         .then(order => {
+             if(order){
+                 axios.get("http://localhost:5555/customer/"+order.CustomerID)
+                      .then(customerResponse => {
+                        const object = {customerName: customerResponse.data.name, bookTitle: ""}
+                        axios.get("http://localhost:4545/book/" + order.BookID)
+                             .then(bookResponse => {
+                                object.bookName = bookResponse.data.title;
+                                res.json(object)
+                             })
+                      })
+             }else{
+                 res.send("There is no order found!")
+             }
+         })
+         .catch(err => console.log(err))
+})
+
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 
