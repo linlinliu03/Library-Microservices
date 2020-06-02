@@ -43,4 +43,15 @@ app.delete("/customer/:id", (req, res) => {
             .catch(err => res.json(err.message))
 })
 
+app.put("/customer/:id", async (req, res) => {
+    let customer = await Customer.findById(req.params.id);
+               
+
+    customer.name = req.body.name;
+
+    customer.save()
+            .then(person => res.json(person))
+            .catch(err => res.json(err.message))
+})
+
 app.listen(5555, () => console.log("This is our customer service!"))
