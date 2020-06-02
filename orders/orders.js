@@ -38,7 +38,7 @@ app.get("/orders/:id", (req, res) => {
                         const object = {customerName: customerResponse.data.name, bookTitle: ""}
                         axios.get("http://localhost:4545/book/" + order.BookID)
                              .then(bookResponse => {
-                                object.bookName = bookResponse.data.title;
+                                object.bookTitle = bookResponse.data.title;
                                 res.json(object)
                              })
                       })
